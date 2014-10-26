@@ -32,6 +32,9 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
     if (self) {
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
         [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
+            self.businesses = response[@"businesses"];
+            self.searchTableView.rowHeight = 200;
+            [self.searchTableView reloadData];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"error: %@", [error description]);
         }];
@@ -51,13 +54,6 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
     [self.searchTableView registerNib:[UINib nibWithNibName:@"SearchTableViewCell" bundle:nil] forCellReuseIdentifier:@"SearchTableViewCell"];
 }
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //return [self heightForBasicCellAtIndexPath:indexPath];
-    return 400
-    ;
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -68,12 +64,18 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
     return self.businesses.count;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SearchTableViewCell* stvc = [self.searchTableView dequeueReusableCellWithIdentifier:@"SearchTableViewCell"];
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    SearchTableViewCell* stvc = [tableView dequeueReusableCellWithIdentifier:@"SearchTableViewCell"];
+    CGFloat height = stvc.placeImageView.bounds.size.height;
+    height += 30 + stvc.addressLabel.bounds.size.height + stvc.categoryLabel.bounds.size.height;
+    return height;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    SearchTableViewCell* stvc = [tableView dequeueReusableCellWithIdentifier:@"SearchTableViewCell" forIndexPath:indexPath];
     NSDictionary* business = self.businesses[indexPath.row];
     stvc.placeNameLabel.text = business[@"name"];
-    
-    stvc.placeNameLabel = business[@"name"];
     NSURL* placeURL = [NSURL URLWithString:business[@"image_url"]];
     NSURLRequest* placeRequest = [[NSURLRequest alloc] initWithURL:placeURL];
     CGSize targetSize = stvc.placeImageView.bounds.size;
@@ -96,7 +98,7 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
         [image drawInRect:CGRectMake(0, 0, targetSize.width, targetSize.height)];
         UIImage* resized = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        [stvc.placeImageView setImage:resized];
+        [stvc.ratingsImageView setImage:resized];
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         NSLog(@"%@", error);
     }];
@@ -116,7 +118,7 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString*)searchText {
-    if(searchText.length > 0) {
+/*    if(searchText.length > 0) {
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
         [self.client searchWithTerm:searchText success:^(AFHTTPRequestOperation *operation, id response) {
             self.businesses = response[@"businesses"];
@@ -125,7 +127,7 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
             NSLog(@"error: %@", [error description]);
         }];
     }
-    
+*/
 }
 
 
