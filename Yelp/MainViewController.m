@@ -31,9 +31,8 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
-        [self.client searchWithTerm:@"Dentist" success:^(AFHTTPRequestOperation *operation, id response) {
+        [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
             self.businesses = response[@"businesses"];
-            self.searchTableView.rowHeight = 200;
             [self.searchTableView reloadData];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"error: %@", [error description]);
@@ -114,20 +113,32 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
     NSArray* address = location[@"address"];
     stvc.addressLabel.text = address[0];
     stvc.categoryLabel.text = categories;
+    float distance = [business[@"distance"] floatValue];
+    stvc.distanceLabel.text = [NSString stringWithFormat:@"%0.2f m", distance];
     return stvc;
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString*)searchText {
-/*    if(searchText.length > 0) {
+    if(searchText.length > 0) {
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
+
         [self.client searchWithTerm:searchText success:^(AFHTTPRequestOperation *operation, id response) {
-            self.businesses = response[@"businesses"];
+            if (self) {
+                self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
+                [self.client searchWithTerm:searchText success:^(AFHTTPRequestOperation *operation, id response) {
+                    self.businesses = response[@"businesses"];
+                    [self.searchTableView reloadData];
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    NSLog(@"error: %@", [error description]);
+                }];
+            }
+
             [self.searchTableView reloadData];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"error: %@", [error description]);
         }];
     }
-*/
+
 }
 
 

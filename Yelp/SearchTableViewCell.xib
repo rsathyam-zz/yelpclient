@@ -58,10 +58,20 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance in meters" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sC-QV-sbp">
+                        <rect key="frame" x="140" y="68" width="100" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="8ko-Wk-oo7"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Zxo-vX-Gnh" firstAttribute="top" secondItem="jnI-VX-jdh" secondAttribute="bottom" constant="10" id="0Tl-eQ-0ng"/>
                     <constraint firstItem="jnI-VX-jdh" firstAttribute="leading" secondItem="Zxo-vX-Gnh" secondAttribute="leading" id="4LQ-U3-7QM"/>
+                    <constraint firstItem="1sC-QV-sbp" firstAttribute="top" secondItem="u7N-qV-LGa" secondAttribute="bottom" constant="14" id="BZA-4N-edJ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Zxo-vX-Gnh" secondAttribute="bottom" id="DzM-eo-hDq"/>
                     <constraint firstItem="cx0-uR-clc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="JQJ-Mh-cqN"/>
                     <constraint firstItem="jnI-VX-jdh" firstAttribute="trailing" secondItem="Zxo-vX-Gnh" secondAttribute="trailing" id="JRp-jo-0ob"/>
@@ -73,17 +83,25 @@
                     <constraint firstItem="u7N-qV-LGa" firstAttribute="leading" secondItem="cx0-uR-clc" secondAttribute="trailing" constant="10" id="iDb-5B-ghv"/>
                     <constraint firstItem="4IJ-0u-uJz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="jIG-rK-YDp"/>
                     <constraint firstItem="Zxo-vX-Gnh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="okS-ph-MUo"/>
+                    <constraint firstItem="1sC-QV-sbp" firstAttribute="leading" secondItem="cx0-uR-clc" secondAttribute="trailing" constant="10" id="rhp-JC-jRq"/>
+                    <constraint firstItem="1sC-QV-sbp" firstAttribute="leading" secondItem="cx0-uR-clc" secondAttribute="trailing" constant="50" id="sd7-cs-CQY"/>
                     <constraint firstItem="jnI-VX-jdh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="sik-0H-4Kz"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="sd7-cs-CQY"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="addressLabel" destination="jnI-VX-jdh" id="zHR-wZ-VYp"/>
                 <outlet property="categoryLabel" destination="Zxo-vX-Gnh" id="VA2-hx-osw"/>
+                <outlet property="distanceLabel" destination="1sC-QV-sbp" id="Vl1-Se-psf"/>
                 <outlet property="placeImageView" destination="cx0-uR-clc" id="FzV-Vc-ECd"/>
                 <outlet property="placeNameLabel" destination="4IJ-0u-uJz" id="cxw-pc-Qbn"/>
                 <outlet property="ratingsImageView" destination="u7N-qV-LGa" id="4Zd-YX-GjI"/>
             </connections>
-            <point key="canvasLocation" x="146" y="217"/>
+            <point key="canvasLocation" x="-24" y="215"/>
         </tableViewCell>
     </objects>
 </document>
