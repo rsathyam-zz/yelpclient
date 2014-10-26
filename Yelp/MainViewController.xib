@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
@@ -17,17 +18,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i3A-Pd-idb">
-                    <rect key="frame" x="137" y="240" width="46" height="30"/>
-                    <state key="normal" title="Button">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lco-Ys-Pjt">
-                    <rect key="frame" x="0.0" y="58" width="351" height="510"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lco-Ys-Pjt">
+                    <rect key="frame" x="0.0" y="58" width="320" height="510"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6RL-HX-eO3">
+                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="6RL-HX-eO3">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
@@ -36,6 +31,15 @@
                 </searchBar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="6RL-HX-eO3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="8hb-6H-GWO"/>
+                <constraint firstAttribute="trailing" secondItem="6RL-HX-eO3" secondAttribute="trailing" id="ISG-oh-uf0"/>
+                <constraint firstAttribute="trailing" secondItem="lco-Ys-Pjt" secondAttribute="trailing" id="NAy-HB-EIi"/>
+                <constraint firstAttribute="bottom" secondItem="lco-Ys-Pjt" secondAttribute="bottom" id="NhL-Jw-PzC"/>
+                <constraint firstItem="lco-Ys-Pjt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="T36-kN-tFu"/>
+                <constraint firstItem="lco-Ys-Pjt" firstAttribute="top" secondItem="6RL-HX-eO3" secondAttribute="bottom" constant="14" id="gzH-O3-vho"/>
+                <constraint firstItem="6RL-HX-eO3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="yyb-iw-T9i"/>
+            </constraints>
             <point key="canvasLocation" x="133" y="72"/>
         </view>
         <searchDisplayController id="nPd-VZ-ZEd">

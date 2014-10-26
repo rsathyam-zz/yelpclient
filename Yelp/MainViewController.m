@@ -64,11 +64,11 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
     return self.businesses.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    SearchTableViewCell* stvc = [tableView dequeueReusableCellWithIdentifier:@"SearchTableViewCell"];
-    return 200;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    SearchTableViewCell* stvc = [tableView dequeueReusableCellWithIdentifier:@"SearchTableViewCell"];
+//    return 200;
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SearchTableViewCell* stvc = [tableView dequeueReusableCellWithIdentifier:@"SearchTableViewCell" forIndexPath:indexPath];
