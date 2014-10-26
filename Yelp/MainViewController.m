@@ -112,7 +112,9 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
             categories = [categories stringByAppendingString: @", "];
         }
     }
-    
+    NSDictionary* location = business[@"location"];
+    NSArray* address = location[@"address"];
+    stvc.addressLabel.text = address[0];
     stvc.categoryLabel.text = categories;
     return stvc;
 }
