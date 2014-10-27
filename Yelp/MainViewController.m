@@ -17,15 +17,15 @@ NSString * const kYelpConsumerSecret = @"35XmT0pVRYexaQ3OVDLnTh56GEo";
 NSString * const kYelpToken = @"rMsGe4GGQVSLEgcBiyuRwqYZwzTihN21";
 NSString * const kYelpTokenSecret = @"9VcPe2R6CTsKFuZ6ly8F78319Bo";
 
-#define kSearchTableViewCellIdentifier @"SearchTableViewCell"
+#define SearchTableViewCellIdentifier @"SearchTableViewCell"
 
 @interface MainViewController ()
 
 @property (nonatomic, strong) YelpClient *client;
 @property (nonatomic, strong) NSArray* businesses;
 @property (nonatomic, strong) NSArray* data;
+@property (nonatomic, strong) NSString* searchText;
 @property UIRefreshControl *refreshControl;
-
 @end
 
 @implementation MainViewController
@@ -36,10 +36,10 @@ NSString * const kYelpTokenSecret = @"9VcPe2R6CTsKFuZ6ly8F78319Bo";
     if (self) {
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
         // we use a weak reference to self so that we avoid a retain cycle
-        __weak typeof(self) weakSelf = self;
-        [self fetchResultsWithQuery:@"thai" withHandler:^(NSArray *results, NSError *error) {
-            weakSelf.businesses = results;
-            [weakSelf.searchTableView reloadData];
+        self.searchText = @"thai";
+        [self fetchResultsWithQuery:self.searchText params: nil withHandler:^(NSArray *results, NSError *error) {
+            self.businesses = results;
+            [self.searchTableView reloadData];
         }];
     }
     
@@ -56,7 +56,7 @@ NSString * const kYelpTokenSecret = @"9VcPe2R6CTsKFuZ6ly8F78319Bo";
     
     self.title = @"Yelp";
     
-    [self.searchTableView registerNib:[UINib nibWithNibName:kSearchTableViewCellIdentifier bundle:nil] forCellReuseIdentifier:kSearchTableViewCellIdentifier];
+    [self.searchTableView registerNib:[UINib nibWithNibName:SearchTableViewCellIdentifier bundle:nil] forCellReuseIdentifier:SearchTableViewCellIdentifier];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(onRefresh) forControlEvents:UIControlEventValueChanged];
@@ -73,20 +73,20 @@ NSString * const kYelpTokenSecret = @"9VcPe2R6CTsKFuZ6ly8F78319Bo";
 #pragma mark - UIRefreshControl
 - (void)onRefresh
 {
-    // use weak reference to self to avoid retain cycles
-    __weak typeof(self) weakSelf = self;
     if (!self.yelpSearchBar.text)
         return;
     
-    [self fetchResultsWithQuery:self.yelpSearchBar.text withHandler:^(NSArray *results, NSError *error) {
-        weakSelf.businesses = results;
-        [weakSelf.searchTableView reloadData];
+    [self fetchResultsWithQuery:self.yelpSearchBar.text params: nil withHandler:^(NSArray *results, NSError *error) {
+        self.businesses = results;
+        [self.searchTableView reloadData];
     }];
+    
+    self.searchText = self.yelpSearchBar.text;
 }
 
-- (void)fetchResultsWithQuery:(NSString *)query withHandler:(void (^)(NSArray *results, NSError *error))handler
+- (void)fetchResultsWithQuery:(NSString *)query params:(NSDictionary *)params withHandler:(void (^)(NSArray *results, NSError *error))handler
 {
-    [self.client searchWithTerm:query success:^(AFHTTPRequestOperation *operation, id response) {
+    [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
         handler(response[@"businesses"], nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
@@ -95,7 +95,8 @@ NSString * const kYelpTokenSecret = @"9VcPe2R6CTsKFuZ6ly8F78319Bo";
 }
 
 - (void)onFilterButton {
-    FilterViewController* fvc = [[FilterViewController alloc] init];
+    FilterViewController* fvc = [[FilterViewController alloc] initWithNibName:NSStringFromClass([FilterViewController class]) bundle:nil];
+    fvc.delegate = self;
     UINavigationController* nvc = [[UINavigationController alloc] initWithRootViewController:fvc];
     [self presentViewController:nvc animated:YES completion:nil];
 }
@@ -154,35 +155,35 @@ NSString * const kYelpTokenSecret = @"9VcPe2R6CTsKFuZ6ly8F78319Bo";
     stvc.distanceLabel.text = [NSString stringWithFormat:@"%0.2f m", distance];
     return stvc;
 }
-
-#pragma mark - Button actions
-- (IBAction)filterButtonTapped:(id)sender
-{
-    [self presentViewController:[FilterViewController new] animated:YES completion:nil];
-}
-
 #pragma mark - Search bar delegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString*)searchText
 {
     if(searchText.length > 0)
     {
-        [self.client searchWithTerm:searchText success:^(AFHTTPRequestOperation *operation, id response) {
+        [self.client searchWithTerm:searchText params: nil success:^(AFHTTPRequestOperation *operation, id response) {
             if (self) {
                 self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
-                [self.client searchWithTerm:searchText success:^(AFHTTPRequestOperation *operation, id response) {
-                    self.businesses = response[@"businesses"];
-                    [self.searchTableView reloadData];
-                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    NSLog(@"error: %@", [error description]);
-                }];
+                self.businesses = response[@"businesses"];
+                [self.searchTableView reloadData];
             }
 
-            [self.searchTableView reloadData];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"error: %@", [error description]);
         }];
+        self.searchText = searchText;
     }
 
+}
+
+#pragma  mark - Filter delegate
+- (void)filtersViewController:(FilterViewController *)filtersViewController didChangeFilters:(NSDictionary *)filters {
+    if (!self.searchText) {
+        return;
+    }
+    [self fetchResultsWithQuery:self.searchText params:filters withHandler:^(NSArray *results, NSError *error) {
+        self.businesses = results;
+        [self.searchTableView reloadData];
+    }];
 }
 
 

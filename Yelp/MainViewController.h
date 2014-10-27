@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FilterViewController.h"
 
-@interface MainViewController : UIViewController<UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface MainViewController : UIViewController<UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate>
 @property (strong, nonatomic) NSArray* searchData;
 @property (weak, nonatomic) IBOutlet UISearchBar *yelpSearchBar;
 @property (weak, nonatomic) IBOutlet UITableView *searchTableView;

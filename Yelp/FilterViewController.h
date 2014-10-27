@@ -7,8 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SwitchCell.h"
 
-@interface FilterViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@class FilterViewController;
+
+@protocol FilterViewControllerDelegate <NSObject>
+- (void) filtersViewController:(FilterViewController *) filtersViewController didChangeFilters:(NSDictionary *)filters;
+@end
+
+@interface FilterViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *filterTableView;
-
+@property (nonatomic, weak) id<FilterViewControllerDelegate> delegate;
 @end
