@@ -27,6 +27,7 @@ NSString * const kYelpTokenSecret = @"9VcPe2R6CTsKFuZ6ly8F78319Bo";
 @property (nonatomic, strong) NSArray* data;
 @property (nonatomic, strong) NSString* searchText;
 @property UIRefreshControl *refreshControl;
+@property UISearchBar *yelpSearchBar;
 @end
 
 @implementation MainViewController
@@ -51,11 +52,8 @@ NSString * const kYelpTokenSecret = @"9VcPe2R6CTsKFuZ6ly8F78319Bo";
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.yelpSearchBar.delegate = self;
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
-    
-    self.title = @"Yelp";
     
     [self.searchTableView registerNib:[UINib nibWithNibName:SearchTableViewCellIdentifier bundle:nil] forCellReuseIdentifier:SearchTableViewCellIdentifier];
     
@@ -63,6 +61,9 @@ NSString * const kYelpTokenSecret = @"9VcPe2R6CTsKFuZ6ly8F78319Bo";
     [self.refreshControl addTarget:self action:@selector(onRefresh) forControlEvents:UIControlEventValueChanged];
     [self.searchTableView insertSubview:self.refreshControl atIndex:0];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
+    self.yelpSearchBar = [[UISearchBar alloc] init];
+    self.yelpSearchBar.delegate = self;
+    self.navigationItem.titleView = self.yelpSearchBar;
 }
 
 - (void)didReceiveMemoryWarning
