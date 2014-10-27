@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SeeMoreCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *seeTextLabel;
 
 @end

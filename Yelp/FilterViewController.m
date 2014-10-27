@@ -27,6 +27,9 @@ typedef NS_ENUM(NSInteger, SortType) {
 @property (nonatomic, strong) NSArray* categories;
 @property (nonatomic, strong) NSMutableSet* selectedCategories;
 @property BOOL categoryIsExpanded;
+@property BOOL radiusIsExpanded;
+@property BOOL dealSet;
+@property int selectedRadius;
 
 @property SortType sort;
 @end
@@ -40,6 +43,8 @@ typedef NS_ENUM(NSInteger, SortType) {
         [self initCategories];
         self.sort = NONE;
         self.categoryIsExpanded = NO;
+        self.radiusIsExpanded = NO;
+        self.selectedRadius = 0;
     }
     return self;
 }
@@ -249,6 +254,15 @@ typedef NS_ENUM(NSInteger, SortType) {
         [filters setObject:number forKey:@"sort"];
     }
     
+    if (self.selectedRadius != 0) {
+        NSNumber *number = [[NSNumber alloc] initWithInt:self.selectedRadius];
+        [filters setObject:number forKey:@"radius_filter"];
+    }
+    
+    if (self.dealSet == YES) {
+        [filters setObject:@"true" forKey:@"deals_filter"];
+    }
+    
     return filters;
 }
 
@@ -275,12 +289,16 @@ typedef NS_ENUM(NSInteger, SortType) {
             if (!self.categoryIsExpanded) {
                 return CategoryExpandRow + 1;
             } else {
-                return self.categories.count;
+                return self.categories.count + 1;
             }
         case SORT:
             return 3;
         case RADIUS:
-            return 1;
+            if (self.radiusIsExpanded) {
+                return 5;
+            } else {
+                return 1;
+            }
         case DEALS:
             return 1;
         default:
@@ -289,7 +307,25 @@ typedef NS_ENUM(NSInteger, SortType) {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == CATEGORIES && indexPath.row == CategoryExpandRow && !self.categoryIsExpanded) {
+        self.categoryIsExpanded = YES;
+        [self.filterTableView reloadData];
+    }
     
+    if (indexPath.section == CATEGORIES && indexPath.row == self.categories.count && self.categoryIsExpanded) {
+        self.categoryIsExpanded = NO;
+        [self.filterTableView reloadData];
+    }
+    
+    if (indexPath.section == RADIUS) {
+        if (!self.radiusIsExpanded) {
+            self.radiusIsExpanded = YES;
+            [self.filterTableView reloadData];
+        } else {
+            self.radiusIsExpanded = NO;
+            [self.filterTableView reloadData];
+        }
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -302,6 +338,11 @@ typedef NS_ENUM(NSInteger, SortType) {
         case CATEGORIES:
             if (!self.categoryIsExpanded && indexPath.row == CategoryExpandRow) {
                 SeeMoreCell* smc = [tableView dequeueReusableCellWithIdentifier:SeeMoreCellIdentifier];
+                smc.seeTextLabel.text = @"See All";
+                return smc;
+            } else if (self.categoryIsExpanded && indexPath.row == self.categories.count) {
+                SeeMoreCell* smc = [tableView dequeueReusableCellWithIdentifier:SeeMoreCellIdentifier];
+                smc.seeTextLabel.text = @"See Less";
                 return smc;
             } else {
                 cell.on = [self.selectedCategories containsObject:self.categories[indexPath.row]];
@@ -311,9 +352,9 @@ typedef NS_ENUM(NSInteger, SortType) {
             break;
         case SORT:
             if (self.sort == indexPath.row) {
-                cell.on = true;
+                cell.on = YES;
             } else {
-                cell.on = false;
+                cell.on = NO;
             }
             switch (indexPath.row) {
                 case BEST_MATCH:
@@ -329,8 +370,45 @@ typedef NS_ENUM(NSInteger, SortType) {
                     cell.switchTitleLabel.text = @"";
             }
             break;
+        case RADIUS:
+            if (!self.radiusIsExpanded) {
+                SeeMoreCell* smc = [tableView dequeueReusableCellWithIdentifier:SeeMoreCellIdentifier];
+                smc.seeTextLabel.text = @"Expand";
+                return smc;
+            } else {
+                if (indexPath.row == 0) {
+                    SeeMoreCell* smc = [tableView dequeueReusableCellWithIdentifier:SeeMoreCellIdentifier];
+                    smc.seeTextLabel.text = @"Collapse";
+                    return smc;
+                }
+                switch(indexPath.row) {
+                    case 1:
+                        cell.switchTitleLabel.text = @"500m";
+                        cell.on = (self.selectedRadius == 500);
+                        break;
+                    case 2:
+                        cell.switchTitleLabel.text = @"1000m";
+                        cell.on = (self.selectedRadius == 1000);
+                        break;
+                    case 3:
+                        cell.switchTitleLabel.text = @"1500m";
+                        cell.on = (self.selectedRadius == 1500);
+                        break;
+                    case 4:
+                        cell.switchTitleLabel.text = @"2000m";
+                        cell.on = (self.selectedRadius == 2000);
+                        break;
+                    default:
+                        break;
+                }
+                return cell;
+            }
+            break;
+        case DEALS:
+            cell.switchTitleLabel.text = @"Deals";
+            cell.on = (self.dealSet == YES);
         default:
-            cell.on = false;
+            cell.on = NO;
             
     }
     return cell;
@@ -390,6 +468,15 @@ typedef NS_ENUM(NSInteger, SortType) {
                     break;
                     
             }
+            break;
+        case RADIUS:
+            self.selectedRadius = ((int)indexPath.row + 1) * 500;
+            break;
+        case DEALS:
+            self.dealSet = YES;
+            break;
+        default:
+            break;
     }
 
 }

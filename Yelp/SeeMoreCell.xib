@@ -24,6 +24,9 @@
                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="seeTextLabel" destination="xWJ-40-Ubz" id="RdU-Fh-31o"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>
