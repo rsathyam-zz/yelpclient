@@ -29,7 +29,6 @@
 		FA9BC68919FDF58B007A67D7 /* SwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9BC68719FDF58B007A67D7 /* SwitchCell.xib */; };
 		FA9BC68D19FE4055007A67D7 /* SeeMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9BC68B19FE4055007A67D7 /* SeeMoreCell.m */; };
 		FA9BC68E19FE4055007A67D7 /* SeeMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9BC68C19FE4055007A67D7 /* SeeMoreCell.xib */; };
-		FA9BC69119FE8CBE007A67D7 /* MainSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9BC69019FE8CBE007A67D7 /* MainSearchBar.m */; };
 		FA9CB42819FDAF2500129DFC /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9CB42619FDAF2500129DFC /* FilterViewController.m */; };
 		FA9CB42919FDAF2500129DFC /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9CB42719FDAF2500129DFC /* FilterViewController.xib */; };
 /* End PBXBuildFile section */
@@ -77,8 +76,6 @@
 		FA9BC68A19FE4055007A67D7 /* SeeMoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeeMoreCell.h; sourceTree = "<group>"; };
 		FA9BC68B19FE4055007A67D7 /* SeeMoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeeMoreCell.m; sourceTree = "<group>"; };
 		FA9BC68C19FE4055007A67D7 /* SeeMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeeMoreCell.xib; sourceTree = "<group>"; };
-		FA9BC68F19FE8CBE007A67D7 /* MainSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainSearchBar.h; sourceTree = "<group>"; };
-		FA9BC69019FE8CBE007A67D7 /* MainSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainSearchBar.m; sourceTree = "<group>"; };
 		FA9CB42519FDAF2500129DFC /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		FA9CB42619FDAF2500129DFC /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		FA9CB42719FDAF2500129DFC /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterViewController.xib; sourceTree = "<group>"; };
@@ -124,8 +121,6 @@
 				420474F818DC2B2100E88E07 /* MainViewController.h */,
 				420474F918DC2B2100E88E07 /* MainViewController.m */,
 				420474FA18DC2B2100E88E07 /* MainViewController.xib */,
-				FA9BC68F19FE8CBE007A67D7 /* MainSearchBar.h */,
-				FA9BC69019FE8CBE007A67D7 /* MainSearchBar.m */,
 				FA369FA719F9EB5200F9C87F /* SearchTableViewCell.h */,
 				FA369FA919F9EB5200F9C87F /* SearchTableViewCell.xib */,
 				FA369FA819F9EB5200F9C87F /* SearchTableViewCell.m */,
@@ -359,7 +354,6 @@
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
 				FA9CB42819FDAF2500129DFC /* FilterViewController.m in Sources */,
 				FA369FAA19F9EB5200F9C87F /* SearchTableViewCell.m in Sources */,
-				FA9BC69119FE8CBE007A67D7 /* MainSearchBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
