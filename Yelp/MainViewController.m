@@ -175,6 +175,11 @@ NSString * const kYelpTokenSecret = @"9VcPe2R6CTsKFuZ6ly8F78319Bo";
 
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 200.f;
+}
+
 #pragma  mark - Filter delegate
 - (void)filtersViewController:(FilterViewController *)filtersViewController didChangeFilters:(NSDictionary *)filters {
     if (!self.searchText) {

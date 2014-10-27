@@ -18,28 +18,27 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lco-Ys-Pjt">
-                    <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <searchBar key="tableHeaderView" contentMode="redraw" id="6RL-HX-eO3">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="320" id="wON-HG-M0u"/>
+                        </constraints>
+                        <textInputTraits key="textInputTraits"/>
+                        <connections>
+                            <outlet property="delegate" destination="-1" id="Unp-Qp-gi1"/>
+                        </connections>
+                    </searchBar>
                 </tableView>
-                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="6RL-HX-eO3">
-                    <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="320" id="wON-HG-M0u"/>
-                    </constraints>
-                    <textInputTraits key="textInputTraits"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="Unp-Qp-gi1"/>
-                    </connections>
-                </searchBar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="6RL-HX-eO3" secondAttribute="trailing" id="ISG-oh-uf0"/>
-                <constraint firstItem="6RL-HX-eO3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="IhT-kT-TXU"/>
                 <constraint firstAttribute="trailing" secondItem="lco-Ys-Pjt" secondAttribute="trailing" id="NAy-HB-EIi"/>
                 <constraint firstAttribute="bottom" secondItem="lco-Ys-Pjt" secondAttribute="bottom" id="NhL-Jw-PzC"/>
                 <constraint firstItem="lco-Ys-Pjt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="T36-kN-tFu"/>
-                <constraint firstItem="lco-Ys-Pjt" firstAttribute="top" secondItem="6RL-HX-eO3" secondAttribute="bottom" id="gzH-O3-vho"/>
+                <constraint firstItem="lco-Ys-Pjt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gHd-HR-bQS"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <point key="canvasLocation" x="133" y="72"/>
