@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FilterViewController : UIViewController
+@interface FilterViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *filterTableView;
 
 @end

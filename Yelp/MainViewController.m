@@ -10,6 +10,7 @@
 #import "SearchTableViewCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "YelpClient.h"
+#import "FilterViewController.h"
 
 NSString * const kYelpConsumerKey = @"RBzq7fFFWsh8t26AjjOEkg";
 NSString * const kYelpConsumerSecret = @"35XmT0pVRYexaQ3OVDLnTh56GEo";
@@ -58,6 +59,7 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(onRefresh) forControlEvents:UIControlEventValueChanged];
     [self.searchTableView insertSubview:self.refreshControl atIndex:0];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(OnFilterButton)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -145,6 +147,11 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
     return stvc;
 }
 
+#pragma mark - Button actions
+- (IBAction)filterButtonTapped:(id)sender
+{
+    [self presentViewController:[FilterViewController new] animated:YES completion:nil];
+}
 
 #pragma mark - Search bar delegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString*)searchText
