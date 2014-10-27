@@ -77,6 +77,7 @@ NSString * const kYelpTokenSecret = @"9VcPe2R6CTsKFuZ6ly8F78319Bo";
         return;
     
     [self fetchResultsWithQuery:self.yelpSearchBar.text params: nil withHandler:^(NSArray *results, NSError *error) {
+        [self.refreshControl endRefreshing];        
         self.businesses = results;
         [self.searchTableView reloadData];
     }];
