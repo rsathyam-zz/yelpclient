@@ -51,7 +51,7 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance in meters" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sC-QV-sbp">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance in meters" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sC-QV-sbp">
                         <rect key="frame" x="140" y="73" width="100" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="8ko-Wk-oo7"/>
@@ -105,7 +105,7 @@
                 <outlet property="placeNameLabel" destination="4IJ-0u-uJz" id="cxw-pc-Qbn"/>
                 <outlet property="ratingsImageView" destination="u7N-qV-LGa" id="4Zd-YX-GjI"/>
             </connections>
-            <point key="canvasLocation" x="-248" y="197"/>
+            <point key="canvasLocation" x="-418" y="119"/>
         </tableViewCell>
     </objects>
 </document>
