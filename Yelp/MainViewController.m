@@ -14,8 +14,8 @@
 
 NSString * const kYelpConsumerKey = @"RBzq7fFFWsh8t26AjjOEkg";
 NSString * const kYelpConsumerSecret = @"35XmT0pVRYexaQ3OVDLnTh56GEo";
-NSString * const kYelpToken = @"JbYKA9eZRwwj0J1SZOqNH6qbxqjrLNjL";
-NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
+NSString * const kYelpToken = @"rMsGe4GGQVSLEgcBiyuRwqYZwzTihN21";
+NSString * const kYelpTokenSecret = @"9VcPe2R6CTsKFuZ6ly8F78319Bo";
 
 #define kSearchTableViewCellIdentifier @"SearchTableViewCell"
 
@@ -54,12 +54,14 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
     
+    self.title = @"Yelp";
+    
     [self.searchTableView registerNib:[UINib nibWithNibName:kSearchTableViewCellIdentifier bundle:nil] forCellReuseIdentifier:kSearchTableViewCellIdentifier];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(onRefresh) forControlEvents:UIControlEventValueChanged];
     [self.searchTableView insertSubview:self.refreshControl atIndex:0];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(OnFilterButton)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,6 +92,12 @@ NSString * const kYelpTokenSecret = @"LbElGoEaw3B_lB03QNryn5X5szE";
         NSLog(@"error: %@", [error description]);
         handler(nil, error);
     }];
+}
+
+- (void)onFilterButton {
+    FilterViewController* fvc = [[FilterViewController alloc] init];
+    UINavigationController* nvc = [[UINavigationController alloc] initWithRootViewController:fvc];
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

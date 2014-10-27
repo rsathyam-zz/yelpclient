@@ -22,36 +22,23 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="6RL-HX-eO3">
-                    <rect key="frame" x="92" y="20" width="228" height="44"/>
+                    <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="320" id="wON-HG-M0u"/>
+                    </constraints>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="Unp-Qp-gi1"/>
                     </connections>
                 </searchBar>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aBc-qq-ZYz">
-                    <rect key="frame" x="0.0" y="20" width="92" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="92" id="oNj-MF-7zR"/>
-                    </constraints>
-                    <state key="normal" title="Filter">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="filterButtonTapped:" destination="-1" eventType="touchUpInside" id="ERM-sk-R7L"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="aBc-qq-ZYz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="9vq-2a-DF6"/>
-                <constraint firstItem="lco-Ys-Pjt" firstAttribute="top" secondItem="aBc-qq-ZYz" secondAttribute="bottom" id="CS3-4e-r8Z"/>
                 <constraint firstAttribute="trailing" secondItem="6RL-HX-eO3" secondAttribute="trailing" id="ISG-oh-uf0"/>
                 <constraint firstItem="6RL-HX-eO3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="IhT-kT-TXU"/>
-                <constraint firstItem="aBc-qq-ZYz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="J7V-9Q-pJU"/>
                 <constraint firstAttribute="trailing" secondItem="lco-Ys-Pjt" secondAttribute="trailing" id="NAy-HB-EIi"/>
                 <constraint firstAttribute="bottom" secondItem="lco-Ys-Pjt" secondAttribute="bottom" id="NhL-Jw-PzC"/>
                 <constraint firstItem="lco-Ys-Pjt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="T36-kN-tFu"/>
-                <constraint firstItem="6RL-HX-eO3" firstAttribute="leading" secondItem="aBc-qq-ZYz" secondAttribute="trailing" id="aHX-XD-nhc"/>
                 <constraint firstItem="lco-Ys-Pjt" firstAttribute="top" secondItem="6RL-HX-eO3" secondAttribute="bottom" id="gzH-O3-vho"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
