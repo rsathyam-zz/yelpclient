@@ -8,8 +8,11 @@
 
 #import "FilterViewController.h"
 #import "SwitchCell.h"
+#import "SeeMoreCell.h"
 
 #define FilterTableViewCellIdentifier @"SwitchCell"
+#define SeeMoreCellIdentifier @"SeeMoreCell"
+#define CategoryExpandRow 5
 
 typedef NS_ENUM(NSInteger, FilterSectionType) {
     CATEGORIES, SORT, RADIUS, DEALS
@@ -23,6 +26,7 @@ typedef NS_ENUM(NSInteger, SortType) {
 @property (nonatomic, readonly) NSDictionary* filters;
 @property (nonatomic, strong) NSArray* categories;
 @property (nonatomic, strong) NSMutableSet* selectedCategories;
+@property BOOL categoryIsExpanded;
 
 @property SortType sort;
 @end
@@ -35,6 +39,7 @@ typedef NS_ENUM(NSInteger, SortType) {
         self.selectedCategories = [NSMutableSet set];
         [self initCategories];
         self.sort = NONE;
+        self.categoryIsExpanded = NO;
     }
     return self;
 }
@@ -219,6 +224,7 @@ typedef NS_ENUM(NSInteger, SortType) {
     self.filterTableView.dataSource = self;
     
     [self.filterTableView registerNib:[UINib nibWithNibName:FilterTableViewCellIdentifier bundle:nil] forCellReuseIdentifier:FilterTableViewCellIdentifier];
+    [self.filterTableView registerNib:[UINib nibWithNibName:SeeMoreCellIdentifier bundle:nil] forCellReuseIdentifier:SeeMoreCellIdentifier];
     
     
     self.navigationItem.RightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onCancelButton)];
@@ -266,7 +272,11 @@ typedef NS_ENUM(NSInteger, SortType) {
 {
     switch(section) {
         case CATEGORIES:
-            return self.categories.count;
+            if (!self.categoryIsExpanded) {
+                return CategoryExpandRow + 1;
+            } else {
+                return self.categories.count;
+            }
         case SORT:
             return 3;
         case RADIUS:
@@ -278,6 +288,10 @@ typedef NS_ENUM(NSInteger, SortType) {
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 
 {
@@ -286,8 +300,14 @@ typedef NS_ENUM(NSInteger, SortType) {
     NSInteger section = indexPath.section;
     switch (section) {
         case CATEGORIES:
-            cell.on = [self.selectedCategories containsObject:self.categories[indexPath.row]];
-            cell.switchTitleLabel.text = self.categories[indexPath.row][@"name"];
+            if (!self.categoryIsExpanded && indexPath.row == CategoryExpandRow) {
+                SeeMoreCell* smc = [tableView dequeueReusableCellWithIdentifier:SeeMoreCellIdentifier];
+                return smc;
+            } else {
+                cell.on = [self.selectedCategories containsObject:self.categories[indexPath.row]];
+                cell.switchTitleLabel.text = self.categories[indexPath.row][@"name"];
+                return cell;
+            }
             break;
         case SORT:
             if (self.sort == indexPath.row) {
