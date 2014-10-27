@@ -15,10 +15,16 @@ typedef NS_ENUM(NSInteger, FilterSectionType) {
     CATEGORIES, SORT, RADIUS, DEALS
 };
 
+typedef NS_ENUM(NSInteger, SortType) {
+    BEST_MATCH, DISTANCE, HIGHEST_RATING, NONE
+};
+
 @interface FilterViewController ()
 @property (nonatomic, readonly) NSDictionary* filters;
 @property (nonatomic, strong) NSArray* categories;
 @property (nonatomic, strong) NSMutableSet* selectedCategories;
+
+@property SortType sort;
 @end
 
 @implementation FilterViewController
@@ -28,6 +34,7 @@ typedef NS_ENUM(NSInteger, FilterSectionType) {
     if (self) {
         self.selectedCategories = [NSMutableSet set];
         [self initCategories];
+        self.sort = NONE;
     }
     return self;
 }
@@ -230,6 +237,12 @@ typedef NS_ENUM(NSInteger, FilterSectionType) {
         NSString* categoryFilter = [categoryNames componentsJoinedByString:@", "];
         [filters setObject:categoryFilter forKey:@"category_filter"];
     }
+    
+    if (self.sort != NONE) {
+        NSNumber *number = [[NSNumber alloc] initWithInt:self.sort];
+        [filters setObject:number forKey:@"sort"];
+    }
+    
     return filters;
 }
 
@@ -255,7 +268,7 @@ typedef NS_ENUM(NSInteger, FilterSectionType) {
         case CATEGORIES:
             return self.categories.count;
         case SORT:
-            return 1;
+            return 3;
         case RADIUS:
             return 1;
         case DEALS:
@@ -266,16 +279,45 @@ typedef NS_ENUM(NSInteger, FilterSectionType) {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+
 {
     SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:FilterTableViewCellIdentifier];
     cell.delegate = self;
-    cell.on = [self.selectedCategories containsObject:self.categories[indexPath.row]];
-    cell.switchTitleLabel.text = self.categories[indexPath.row][@"name"];
+    NSInteger section = indexPath.section;
+    switch (section) {
+        case CATEGORIES:
+            cell.on = [self.selectedCategories containsObject:self.categories[indexPath.row]];
+            cell.switchTitleLabel.text = self.categories[indexPath.row][@"name"];
+            break;
+        case SORT:
+            if (self.sort == indexPath.row) {
+                cell.on = true;
+            } else {
+                cell.on = false;
+            }
+            switch (indexPath.row) {
+                case BEST_MATCH:
+                    cell.switchTitleLabel.text = @"Best Match";
+                    break;
+                case HIGHEST_RATING:
+                    cell.switchTitleLabel.text = @"Highest Rating";
+                    break;
+                case DISTANCE:
+                    cell.switchTitleLabel.text = @"Distance";
+                    break;
+                default:
+                    cell.switchTitleLabel.text = @"";
+            }
+            break;
+        default:
+            cell.on = false;
+            
+    }
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section; {
-    switch(section) {
+    switch (section) {
         case CATEGORIES:
             return @"Categories";
         case SORT:
@@ -296,10 +338,39 @@ typedef NS_ENUM(NSInteger, FilterSectionType) {
 
 - (void)switchCell:(SwitchCell *)cell didUpdateValue:(BOOL)value {
     NSIndexPath* indexPath = [self.filterTableView indexPathForCell:cell];
-    if (value) {
-        [self.selectedCategories addObject:self.categories[indexPath.row]];
-    } else {
-        [self.selectedCategories removeObject:self.categories[indexPath.row]];
+    switch (indexPath.section) {
+        case CATEGORIES:
+            if (value) {
+                [self.selectedCategories addObject:self.categories[indexPath.row]];
+            } else {
+                [self.selectedCategories removeObject:self.categories[indexPath.row]];
+            }
+        case SORT:
+            switch(indexPath.row) {
+                case BEST_MATCH:
+                    if(value) {
+                        self.sort = BEST_MATCH;
+                    } else {
+                        self.sort = NONE;
+                    }
+                    break;
+                case DISTANCE:
+                    if(value) {
+                        self.sort = DISTANCE;
+                    } else {
+                        self.sort = NONE;
+                    }
+                    break;
+                case HIGHEST_RATING:
+                    if (value) {
+                        self.sort = HIGHEST_RATING;
+                    } else {
+                        self.sort = NONE;
+                    }
+                    break;
+                    
+            }
     }
+
 }
 @end
